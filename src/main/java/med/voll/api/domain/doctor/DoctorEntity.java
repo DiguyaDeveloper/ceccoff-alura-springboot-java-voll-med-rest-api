@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.address.AddressEntity;
 import med.voll.api.domain.doctor.enums.Speciality;
-import med.voll.api.domain.phone.Phone;
 import med.voll.api.domain.phone.PhoneEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,6 +31,7 @@ public class DoctorEntity {
     private String name;
     private String email;
     private String crm;
+    private Boolean active;
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
     @Embedded
@@ -53,5 +53,24 @@ public class DoctorEntity {
         this.address = new AddressEntity(doctor.address());
         this.speciality = doctor.specialty();
         this.phone = new PhoneEntity(doctor.phone());
+        this.active = true;
+    }
+
+    public void update(UpdateDoctor doctor) {
+        if (!doctor.name().isEmpty()) {
+            this.name = doctor.name();
+        }
+
+        if (doctor.address() != null) {
+            this.address.update(doctor.address());
+        }
+
+        if (doctor.phone() != null) {
+            this.phone.update(doctor.phone());
+        }
+    }
+
+    public void inactivate() {
+        this.active = false;
     }
 }
