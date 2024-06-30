@@ -16,4 +16,8 @@ public class PhoneEntity {
     public PhoneEntity(Phone phone) {
         this.phone = "(%s) %s".formatted(phone.DDD(), phone.number());
     }
+
+    public void update(Phone phone) {
+        this.phone = "(%s) %s".formatted(phone.DDD(), phone.number());
+    }
 }
