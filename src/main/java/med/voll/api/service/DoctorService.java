@@ -1,5 +1,6 @@
 package med.voll.api.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import med.voll.api.domain.doctor.Doctor;
 import med.voll.api.domain.doctor.DoctorEntity;
 import med.voll.api.domain.doctor.DoctorResponse;
@@ -33,7 +34,7 @@ public class DoctorService {
 
     public DoctorResponse get(UUID id) {
         var doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Doctor not found"));
+                () -> new EntityNotFoundException("Doctor not found"));
         return new DoctorResponse(
             doctor
         );
@@ -42,7 +43,7 @@ public class DoctorService {
     @Transactional
     public DoctorEntity update(UUID id, UpdateDoctor request) {
         var doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Doctor not found"));
+                () -> new EntityNotFoundException("Doctor not found"));
         doctor.update(request);
 
         return doctor;
@@ -56,7 +57,7 @@ public class DoctorService {
     @Transactional
     public void inactivate(UUID id) {
         var doctor = doctorRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Doctor not found"));
+                () -> new EntityNotFoundException("Doctor not found"));
 
         doctor.inactivate();
     }
