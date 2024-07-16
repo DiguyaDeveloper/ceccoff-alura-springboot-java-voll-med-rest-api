@@ -1,8 +1,6 @@
 package med.voll.api.domain.address;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record Address(
@@ -20,4 +18,16 @@ public record Address(
         String number,
         String additionalInfo
 ) {
+    public Address(AddressEntity address) {
+        this(
+                address.getStreet(),
+                address.getNeighborhood(),
+                address.getZipCode(),
+                address.getCity(),
+                address.getState(),
+                address.getNumber(),
+                address.getAdditionalInfo()
+        );
+
+    }
 }
