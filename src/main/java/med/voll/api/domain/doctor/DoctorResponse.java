@@ -1,5 +1,6 @@
 package med.voll.api.domain.doctor;
 
+import med.voll.api.domain.address.Address;
 import med.voll.api.domain.doctor.enums.Speciality;
 
 import java.util.UUID;
@@ -9,7 +10,8 @@ public record DoctorResponse(
         String name,
         String email,
         String crm,
-        Speciality specialty
+        Speciality speciality,
+        Address address
 ) {
         public DoctorResponse(DoctorEntity doctor) {
                 this(
@@ -17,7 +19,8 @@ public record DoctorResponse(
                         doctor.getName(),
                         doctor.getEmail(),
                         doctor.getCrm(),
-                        doctor.getSpeciality()
+                        doctor.getSpeciality(),
+                        new Address(doctor.getAddress())
                 );
         }
 }
