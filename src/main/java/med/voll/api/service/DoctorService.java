@@ -20,9 +20,11 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     @Transactional
-    public DoctorEntity create(Doctor doctor) {
+    public DoctorResponse create(Doctor doctor) {
         DoctorEntity newDoctor = new DoctorEntity(doctor);
-        return doctorRepository.save(newDoctor);
+        doctorRepository.save(newDoctor);
+
+        return new DoctorResponse(newDoctor);
     }
 
     public Page<DoctorResponse> getAllDoctors(Pageable pagination) {

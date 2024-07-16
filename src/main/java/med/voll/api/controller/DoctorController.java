@@ -1,8 +1,10 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
-import med.voll.api.domain.doctor.*;
+import med.voll.api.domain.doctor.Doctor;
+import med.voll.api.domain.doctor.DoctorEntity;
+import med.voll.api.domain.doctor.DoctorResponse;
+import med.voll.api.domain.doctor.UpdateDoctor;
 import med.voll.api.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.print.Doc;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,25 +22,28 @@ public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+
     @PostMapping
     public ResponseEntity<DoctorResponse> create(@RequestBody @Valid Doctor request, UriComponentsBuilder uriBuilder) {
-        DoctorEntity doctor = doctorService.create(request);
+        DoctorResponse doctor = doctorService.create(request);
 
-        var uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
+        var uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.id()).toUri();
 
-        return ResponseEntity.created(uri).body(new DoctorResponse(doctor));
+        return ResponseEntity.created(uri).body(doctor);
     }
 
     @GetMapping
     public ResponseEntity<Page<DoctorResponse>> getAll(@PageableDefault(size = 10, page = 0, sort = {"name"}) Pageable pagination) {
-        Page<DoctorResponse> doctors =  doctorService.getAllDoctors(pagination);
+        Page<DoctorResponse> doctors = doctorService.getAllDoctors(pagination);
 
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/{id}")
-    public DoctorResponse get(@PathVariable("id") UUID id) {
-        return doctorService.get(id);
+    public ResponseEntity<DoctorResponse> get(@PathVariable("id") UUID id) {
+        DoctorResponse doctor = doctorService.get(id);
+
+        return ResponseEntity.ok().body(doctor);
     }
 
     @PutMapping("/{id}")
