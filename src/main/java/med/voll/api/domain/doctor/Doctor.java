@@ -19,7 +19,7 @@ public record Doctor(
         @Pattern(regexp = "\\d{4,6}")
         String crm,
         @NotNull
-        Speciality specialty,
+        Speciality speciality,
         @NotNull
         @Valid
         Address address,

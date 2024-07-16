@@ -51,7 +51,7 @@ public class DoctorEntity {
         this.email = doctor.email();
         this.crm = doctor.crm();
         this.address = new AddressEntity(doctor.address());
-        this.speciality = doctor.specialty();
+        this.speciality = doctor.speciality();
         this.phone = new PhoneEntity(doctor.phone());
         this.active = true;
     }
