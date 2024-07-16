@@ -10,20 +10,20 @@ import med.voll.api.domain.doctor.enums.Speciality;
 import med.voll.api.domain.phone.Phone;
 
 public record Doctor(
-        @NotBlank
+        @NotBlank(message = "{name.required}")
         String name,
-        @NotBlank
-        @Email
+        @NotBlank(message = "{email.required}")
+        @Email(message = "{email.invalid}")
         String email,
-        @NotBlank
-        @Pattern(regexp = "\\d{4,6}")
+        @NotBlank(message = "{crm.required}")
+        @Pattern(regexp = "\\d{4,6}", message = "{crm.invalid}")
         String crm,
-        @NotNull
+        @NotNull(message = "{speciality.required}")
         Speciality speciality,
-        @NotNull
+        @NotNull(message = "{address.required}")
         @Valid
         Address address,
-        @NotNull
+        @NotNull(message = "{phone.required}")
         @Valid
         Phone phone
 ) {
